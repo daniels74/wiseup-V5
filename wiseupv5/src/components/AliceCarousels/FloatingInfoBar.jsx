@@ -10,15 +10,21 @@ const FloatingInfoBar = (props) => {
 
   //---------------DATA ACCESS-----------------
   React.useEffect(() => {
-    setTrending(props.data);
+    const createhtmlArray = (arr) => {
+      const htmlArray = arr.map(function (element, i) {
+        return (
+          <div key={i}>
+            {element.name} : {element.market_data.current_price.usd}
+          </div>
+        );
+      });
+      setTrending(htmlArray);
+    };
+
+    createhtmlArray(props.data);
   }, [props.data]);
 
-  //---------------------STYLES-----------------
-
-  //--------------organize items-------------------
-  const items = props.data;
-
-  //How will it show?
+  // Breakpoints
   const responsive = {
     0: {
       items: 2,
@@ -46,7 +52,7 @@ const FloatingInfoBar = (props) => {
           disableDotsControls
           disableButtonsControls
           responsive={responsive}
-          items={items}
+          items={trending}
           autoPlay
           animationEasingFunction="linear"
         />

@@ -3,10 +3,10 @@ import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
 
 //Components
-import News from "../CardContainer/News";
+//import News from "../CardContainer/News";
 
 //26324f
-const ThickContainer = ({ cryptoNewsData }) => {
+const ThickContainer = ({ Compo, cryptoNewsData, Loader }) => {
   return (
     <Box
       sx={{
@@ -18,6 +18,8 @@ const ThickContainer = ({ cryptoNewsData }) => {
         borderRadius: "1rem",
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         cursor: "pointer",
         transition: "transform 200ms ease-in",
         background:
@@ -31,7 +33,8 @@ const ThickContainer = ({ cryptoNewsData }) => {
         overflowY: "auto",
       }}
     >
-      <News cryptoNewsData={cryptoNewsData} />
+
+      {cryptoNewsData ? <Compo cryptoNewsData={cryptoNewsData} /> : <Loader color="#3663d6" />}
     </Box>
   );
 };

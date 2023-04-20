@@ -9,17 +9,9 @@ import TopSection from "./TopSection/TopSection";
 const Landing = () => {
   const [cryptoData, setCryptoData] = useState([]);
   const [popularCryptoData, setPopularCryptoData] = useState();
-  const [cryptoNews, setCryptoNews] = useState([]);
+  const [cryptoNews, setCryptoNews] = useState();
 
   useEffect(() => {
-    const coins = [
-      "bitcoin",
-      "ethereum",
-      "tether",
-      "dogecoin",
-      "matic-network",
-    ];
-
     async function getCoinPrices(coins) {
       let data = [];
       for (const element of coins) {
@@ -31,33 +23,23 @@ const Landing = () => {
       return data;
     }
 
-    const createhtmlArray = (arr) => {
-      const htmlArray = arr.map(function (element, i) {
-        return (
-          <div key={i}>
-            {element.name} : {element.market_data.current_price.usd}
-          </div>
-        );
-      });
-      return htmlArray;
-      // console.log("CryptoData: ", cryptoData);
-    };
-
     const fetchPopularCoins = async () => {
       // 1. Get trending 7
       const popularCoins = await fetch(`/landing/trendingEight`, {}).then(
         (response) => response.json()
       );
 
+      // 2. get coin id for access to its info later
       const d = [];
       popularCoins.forEach((item) => {
         let id = item.item.id;
         d.push(id);
       });
 
+      // 3. get coin prices based on ids collected
       let prices = [];
       prices = await getCoinPrices(d);
-
+      console.log(prices);
       return prices;
     };
 
@@ -70,23 +52,24 @@ const Landing = () => {
       return theNews;
     };
 
-    const fetchCoins = async () => {
-      const data = await getCoinPrices(coins);
+    const fetchLandingData = async () => {
+      const coins = [
+        "bitcoin",
+        "ethereum",
+        "tether",
+        "dogecoin",
+        "matic-network",
+      ];
 
-      const htmlArr = await createhtmlArray(data);
+      setCryptoData(await getCoinPrices(coins));
 
-      setCryptoData(htmlArr);
+      setPopularCryptoData(await fetchPopularCoins());
 
-      const pop = await fetchPopularCoins();
+      setCryptoNews(await fetchCryptoNews());
+    };
 
-      setPopularCryptoData(pop);
-
-      const news = await fetchCryptoNews();
-
-      setCryptoNews(news);
-    }
-
-    fetchCoins();
+    // Get all data for landing page
+    fetchLandingData();
   }, []);
 
   return (
@@ -113,7 +96,7 @@ const Landing = () => {
       >
         <TopSection
           data={cryptoData}
-          mostPopularCryptoBar={popularCryptoData}
+          popularCryptoData={popularCryptoData}
           cryptoNewsData={cryptoNews}
         />
       </Box>

@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
 
-const TopeTrendingContainer = () => {
+const TopTrendingContainer = () => {
   return (
     <Box
       sx={{
@@ -41,4 +41,4 @@ const TopeTrendingContainer = () => {
   );
 };
 
-export default TopeTrendingContainer;
+export default TopTrendingContainer;

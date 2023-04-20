@@ -133,7 +133,7 @@ const Card = ({ price, name, thepic }) => {
           // top: { xs: ".5rem", md: "8%", lg: "2rem" },
           // left: { xs: ".3rem", md: ".5rem" },
           borderRadius: "1rem",
-          fontSize: ".8rem"
+          fontSize: ".8rem",
         }}
       >
         <Box

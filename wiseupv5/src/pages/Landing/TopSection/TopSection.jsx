@@ -1,21 +1,19 @@
 import React from "react";
-
 //-------------Styless--------------------
 import "./TopSection.css";
 import { Box } from "@mui/material";
-
 //------------Components------------------
 import DiamondsMarquee from "../../../components/Marquee/Diamonds/DiamondsMarquee";
-//import MarqueeBase from "../../../components/Marquee/MarqueeBase";
 import FloatingInfoBar from "../../../components/AliceCarousels/FloatingInfoBar";
-import TopCryptoStats from "../../../components/Containers/ThinContainer";
-import CryptoNews from "../../../components/Containers/ThickContainer";
-import TopeTrendingContainer from "../../../components/Containers/TitleContainers/TopeTrendingContainer";
-// import UsersCarousel from "../../../components/AliceCarousels/Carousel";
-import ClipLoader from "react-spinners/ClipLoader";
+import TopTrendingContainer from "../../../components/Containers/TitleContainers/TopTrendingContainer";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import GridLoader from "react-spinners/GridLoader";
+import ThickContainer from "../../../components/Containers/ThickContainer";
+import News from "./CardContainer/News";
+import ThinContainer from "../../../components/Containers/ThinContainer";
+import TopTrending from "./TopTrending";
 
-
-const TopSection = ({ data, mostPopularCryptoBar, cryptoNewsData }) => {
+const TopSection = ({ data, popularCryptoData, cryptoNewsData }) => {
   const MarqueeImages_LargeScreen = [
     { id: 1, img: "./logo192.png" },
     { id: 2, img: "./logo192.png" },
@@ -143,29 +141,29 @@ const TopSection = ({ data, mostPopularCryptoBar, cryptoNewsData }) => {
                 width: { xs: "50%", sm: "40%", md: "30%" },
               }}
             >
-              <TopeTrendingContainer />
+              <TopTrendingContainer />
             </Box>
           </Box>
-
-          {mostPopularCryptoBar && (
-            <Box
-              sx={{
-                position: "relative",
-                zIndex: "1",
-                height: "70%",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {mostPopularCryptoBar ? (
-                <TopCryptoStats mostPopularCryptoBar={mostPopularCryptoBar} />
-              ) : (
-                <Box>Loading</Box>
-              )}
-            </Box>
-          )}
+          <Box
+            sx={{
+              position: "relative",
+              zIndex: "1",
+              height: "70%",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {popularCryptoData ? (
+              <ThinContainer
+                Compo={TopTrending}
+                cryptodata={popularCryptoData}
+              />
+            ) : (
+              <ThinContainer Loader={PropagateLoader} />
+            )}
+          </Box>
         </Box>
         {/* The News Space */}
         <Box
@@ -180,9 +178,9 @@ const TopSection = ({ data, mostPopularCryptoBar, cryptoNewsData }) => {
           }}
         >
           {cryptoNewsData ? (
-            <CryptoNews cryptoNewsData={cryptoNewsData} />
+            <ThickContainer Compo={News} cryptoNewsData={cryptoNewsData} />
           ) : (
-            <ClipLoader>Loading....</ClipLoader>
+            <ThickContainer Loader={GridLoader} />
           )}
         </Box>
       </Box>

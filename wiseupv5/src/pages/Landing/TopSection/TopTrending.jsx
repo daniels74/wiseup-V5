@@ -1,25 +1,38 @@
 import React from "react";
 import { Box } from "@mui/material";
-import Card from "./Card";
+//import Card from "./Card";
 
 const TopTrending = ({ cryptodata }) => {
-  const CryptoBarData = cryptodata.map((item, i) => {
-    // console.log("item: ", item);
-    return (
-      <>
-        {item ? (
-          <Card
-            key={item.id}
-            price={item.market_data.current_price.usd}
-            name={item.name}
-            thepic={item.image.small}
-          />
-        ) : (
-          <></>
-        )}
-      </>
-    );
-  });
+
+  //const [dataState, setDataState] = React.useState([]);
+
+  // if(dataState.length === 0) {
+  //   setDataState(cryptodata);
+  // }
+
+//  React.useEffect(() => {
+//   const CryptoBarData = cryptodata.map((item, i) => {
+//     // console.log("item: ", item);
+//     return (
+//       <>
+//         {item.market_data ? (
+//           <Card
+//             key={item.id}
+//             price={item.market_data.current_price.usd}
+//             name={item.name}
+//             thepic={item.image.small}
+//           />
+//         ) : (
+//           <><Card name={item.name}/>
+//         </>
+//         )}
+//       </>
+//     );
+//   });
+
+//   setDataState(CryptoBarData);
+
+//  }, [cryptodata]);
 
   return (
     <>
@@ -36,7 +49,8 @@ const TopTrending = ({ cryptodata }) => {
             //gridColumnGap: {xs: ".3rem",md: "2rem", lg: "4rem"},
           }}
         >
-          {cryptodata && CryptoBarData}
+          {/* {dataState} */}
+          { cryptodata }
         </Box>
       ) : (
         <Box>Loading..... </Box>

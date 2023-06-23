@@ -13,9 +13,16 @@ const FloatingInfoBar = (props) => {
     const createhtmlArray = (arr) => {
       const htmlArray = arr.map(function (element, i) {
         return (
-          <div key={i}>
-            {element.name} : {element.market_data.current_price.usd}
-          </div>
+          <>
+            {element.market_data ? (
+              <div key={i}>
+                {element.name} : {element.market_data.current_price.usd}
+                {/* {element.name} */}
+              </div>
+            ) : (
+              <div>NA</div>
+            )}
+          </>
         );
       });
       setTrending(htmlArray);

@@ -5,11 +5,12 @@ import { Box } from "@mui/material";
 // components
 import TopSection from "./TopSection/TopSection";
 //import LowerSection from "./LowerSection/LowerSection";
+import Card from "../Landing/TopSection/Card";
 
 const Landing = () => {
   const [cryptoData, setCryptoData] = useState([]);
-  const [popularCryptoData, setPopularCryptoData] = useState();
-  const [cryptoNews, setCryptoNews] = useState();
+  const [popularCryptoData, setPopularCryptoData] = useState([]);
+  const [cryptoNews, setCryptoNews] = useState([]);
 
   useEffect(() => {
     async function getCoinPrices(coins) {
@@ -21,6 +22,28 @@ const Landing = () => {
         data.push(d);
       }
       return data;
+    }
+
+    const createCardArray = async (cryptodata) => {
+      const CryptoBarData = cryptodata.map((item, i) => {
+        // console.log("item: ", item);
+        return (
+          <>
+            {item.market_data ? (
+              <Card
+                key={item.id}
+                price={item.market_data.current_price.usd}
+                name={item.name}
+                thepic={item.image.small}
+              />
+            ) : (
+              <><Card name={item.name}/>
+            </>
+            )}
+          </>
+        );
+            })
+      return CryptoBarData;
     }
 
     const fetchPopularCoins = async () => {
@@ -39,8 +62,10 @@ const Landing = () => {
       // 3. get coin prices based on ids collected
       let prices = [];
       prices = await getCoinPrices(d);
-      console.log(prices);
-      return prices;
+      console.log("PRICES: ", prices);
+
+      
+      return await createCardArray(prices);
     };
 
     const fetchCryptoNews = async () => {
@@ -69,7 +94,8 @@ const Landing = () => {
     };
 
     // Get all data for landing page
-    fetchLandingData();
+      fetchLandingData();
+
   }, []);
 
   return (
@@ -94,11 +120,16 @@ const Landing = () => {
           width: "100%",
         }}
       >
-        <TopSection
+        {
+          cryptoData && popularCryptoData && cryptoNews ? 
+          <TopSection
           data={cryptoData}
           popularCryptoData={popularCryptoData}
           cryptoNewsData={cryptoNews}
         />
+        :
+          <div>LOADING!!!!</div>
+        }
       </Box>
       {/* <Box sx={{ position: "relative", height: "50%", width: "100%" }}>
           <LowerSection />
